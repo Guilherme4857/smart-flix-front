@@ -1,0 +1,10 @@
+  .scroll {
+    height: 300px;
+    overflow-y: auto;
+  }
+
+  .static-card
+  {
+    position: static;
+  }
+

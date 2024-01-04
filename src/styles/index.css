@@ -1,0 +1,14 @@
+@import url('../../node_modules/@fortawesome/fontawesome-free/css/all.min.css');
+
+.card-form{
+    width: 60%;
+}
+
+.login-form{
+    width: 60%;
+}
+
+body
+{
+    background-color: rgba(0, 0, 0, 0.568);
+}

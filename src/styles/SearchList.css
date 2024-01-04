@@ -1,0 +1,10 @@
+
+.search-list-container{
+    position: relative;
+}
+
+.search-list{
+    position: absolute;
+    width: 100%;
+    margin-bottom: 40px;
+}
