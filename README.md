@@ -1,8 +1,10 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# About Smart Flix
+Smart Flix is a project planned by `Campus Code` as a final curse project and here developed by `Guilherme A.V. Marques`. This project
+is a system of gyms with unique page front-end writed in ReactJS utilizing Bootstrap and React-Bootstrap.
 
 ## Available Scripts
+
+Before anything, right after you clone this project must run `npm install` to build it.
 
 In the project directory, you can run:
 
