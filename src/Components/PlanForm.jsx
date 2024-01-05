@@ -1,7 +1,7 @@
 import "../styles/PlanForm.css"
 
 import { Button, Card, Form } from 'react-bootstrap'
-import { intialPlan, schema } from '../Validations/PlanFormValidations.js'
+import { intialPlan, schema } from '../Validations/PlanFormValidations'
 import { useEffect, useState } from 'react'
 
 import Api from '../api/Api'
@@ -12,9 +12,7 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { useForm } from 'react-hook-form'
 
 export default function PlanForm() {
-    const planController = new Api({ controller: "plans" })
-    
-	const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({ resolver: joiResolver(schema), defaultValues: { ...intialPlan } })
+    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({ resolver: joiResolver(schema), defaultValues: { ...intialPlan } })
     register("classCategoriesIds")
     
     const [ categoriesFinded, setCategoriesFinded ] = useState([])
@@ -24,10 +22,15 @@ export default function PlanForm() {
     
     useEffect(() =>{
         const classCategoriesController = new Api({ controller: "class-categories" })
+        
         const getClassCategories = async () => {
-            const response = await classCategoriesController.get()
-            const array = new ArrayExtension(...response.data)
-            setClassCategories(array)
+            const response = await classCategoriesController.get()            
+            
+            if(response !== undefined)
+            {
+                const array = new ArrayExtension(...response.data)
+                setClassCategories(array)   
+            }
         }
         
         getClassCategories()
@@ -77,6 +80,8 @@ export default function PlanForm() {
     }
     
     const onSubmit = async data => {
+        const planController = new Api({ controller: "plans" })
+        
         setSearchInput("")
         setCategoriesFinded([])
         await planController.post({ data: data })
@@ -98,25 +103,25 @@ export default function PlanForm() {
                     <Form.Group className="mb-3 mt-4" controlId="name">
                         <Form.Label>Nome</Form.Label>
                         <Form.Control { ...register("name") } name="name" type="text" placeholder="Nome" />
-                        {errors.name?.message && <p>{ errors.name?.message }</p>}
+                        {errors.name?.message && <Form.Text>{ errors.name?.message }</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="monthlyValue">
                         <Form.Label>Valor mensal</Form.Label>
                         <Form.Control { ...register("monthlyValue") } name="monthlyValue" type="text" placeholder="Valor mensal" />
-                        {errors.monthlyValue?.message && <p>{ errors.monthlyValue?.message }</p>}
+                        {errors.monthlyValue?.message && <Form.Text>{ errors.monthlyValue?.message }</Form.Text>}
                     </Form.Group>
 
                     <Form.Group className="mb-4" controlId="classTotal">
                         <Form.Label>Total de aulas</Form.Label>
                         <Form.Control { ...register("classTotal") } name="classTotal" type="text" placeholder="Total de aulas" />
-                        {errors.classTotal?.message && <p>{ errors.classTotal?.message }</p>}
+                        {errors.classTotal?.message && <Form.Text>{ errors.classTotal?.message }</Form.Text>}
                     </Form.Group>			
                     
                     <Form.Group className="mb-4">
                         <Form.Label className="mb-0" > Selecione categorias de aula: </Form.Label>
                         <Form.Control value={ searchInput } type="search" onChange={ handleSearch } />
-                        {errors.classCategoriesIds?.message && <p>{ errors.classCategoriesIds?.message }</p>}
+                        {errors.classCategoriesIds?.message && <Form.Text>{ errors.classCategoriesIds?.message }</Form.Text>}
                         <SearchList
                             itensFinded={ categoriesFinded }
                             handleItemClick={ handleCategoryClick }
@@ -132,7 +137,7 @@ export default function PlanForm() {
                     <Button variant="outline-success" className='mb-4' type="submit" >
                         Cadastrar
                     </Button>
-                </Form>
+                </Form>                
             </Card.Body>
         </Card>
 	)

@@ -1,29 +1,54 @@
-import { Button, Card, Form } from "react-bootstrap"
+import "../styles/LoginForm.css"
 
-export default function LoginForm() {
+import { Button, Card, Form } from "react-bootstrap"
+import { intialLogin, schema } from '../Validations/LoginFormValidations'
+
+import Api from '../api/Api'
+import { joiResolver } from '@hookform/resolvers/joi'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
+export default function LoginForm({changeToken}) {
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: joiResolver(schema), defaultValues: { ...intialLogin } })
+    const navigate = useNavigate()
+    const [message, setMessage] = useState(null)
+
+    const onSubmit = async data => {
+        try {
+            const planController = new Api({ controller: "authentication" })
+
+            await planController.post({ data: data }).then(response => {
+                localStorage.setItem("userToken", response.data.token)
+    
+                changeToken(response.data.token)  
+            })
+            
+            navigate("/plan-enroll")
+        } catch (error) {
+            setMessage(error.response.data.message)
+        }
+	}
+    
   return (
-    <Card style={{ width: '70rem' } } className="shadow p-5 m-5">
+    <Card className="shadow p-5  card-login-form login-form-margin">
         <Card.Body className="d-flex justify-content-center">            
-            <Form className="login-form">
+            <Form className="login-form" onSubmit={ handleSubmit(onSubmit) }>
+                {message !== null && <Form.Text>{message}</Form.Text>}
                 <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="text" placeholder="Enter email" />
-                    <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                    </Form.Text>
+                    <Form.Control { ...register("email") } name="email" type="email" placeholder="Email" />
+                    {errors.email?.message && <Form.Text>{ errors.email?.message }</Form.Text>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="text" placeholder="Password" />
+                    <Form.Label>Senha</Form.Label>
+                    <Form.Control { ...register("password") } name="password" type="password" placeholder="Senha" />
+                    {errors.password?.message && <Form.Text>{ errors.password?.message }</Form.Text>}
                 </Form.Group>
-                
-                <Form.Group className="mb-3" controlId="checkbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                
-                <Button variant="primary" type="submit">
-                    Submit
+                                
+                <Button variant="primary mt-5" type="submit">
+                    Entrar
                 </Button>
             </Form>
         </Card.Body>
