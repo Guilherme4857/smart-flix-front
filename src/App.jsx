@@ -1,6 +1,7 @@
 import './styles/App.css';
 
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import NotificationsSystem, { bootstrapTheme, setUpNotifications, useNotifications } from 'reapop'
 import { useEffect, useState } from 'react';
 
 import ClassCategoryForm from './Components/ClassCategoryForm';
@@ -9,8 +10,11 @@ import PlanForm from './Components/PlanForm';
 
 export default function App() {
 	const [userToken, changeToken] = useState(localStorage.getItem("userToken"))
+	const { notifications, dismissNotification, notify } = useNotifications()
 
-	useEffect(() =>{		
+	setUpNotifications({ defaultProps: { position: 'bottom-right', dismissAfter: 5000 } })
+
+	useEffect(() =>{
 		switch (window.location.pathname) {
 			case "/plan-enroll":
 				break;
@@ -36,18 +40,24 @@ export default function App() {
 							<Route path="/" element={<Navigate to={"/login"}/>}/>
 							<Route path="/plan-enroll" element={<Navigate to={"/login"}/>}/>
 							<Route path="/class-category-enroll" element={<Navigate to={"/login"}/>}/>
-							<Route path="/login" element={<LoginForm changeToken={changeToken}/>}/>
+							<Route path="/login" element={<LoginForm changeToken={ changeToken } notify={ notify }/>}/>
 						</>)
 					}
 					{
 						userToken && (
 						<>
-							<Route path="/plan-enroll" element={<PlanForm/>}/>
-							<Route path="/class-category-enroll" element={<ClassCategoryForm/>}/>
+							<Route path="/plan-enroll" element={<PlanForm notify={ notify }/>}/>
+							<Route path="/class-category-enroll" element={<ClassCategoryForm notify={ notify }/>}/>
 						</>)
 					}
 				</Routes>
 			</Router>
+
+			<NotificationsSystem
+				notifications={ notifications }
+				dismissNotification={ (id) => dismissNotification(id) }
+				theme={ bootstrapTheme }
+			/>
 		</>
 	);
 }

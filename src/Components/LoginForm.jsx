@@ -9,14 +9,15 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-export default function LoginForm({changeToken}) {
+export default function LoginForm({ changeToken, notify }) {
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: joiResolver(schema), defaultValues: { ...intialLogin } })
-    const navigate = useNavigate()
     const [message, setMessage] = useState(null)
-
+    const navigate = useNavigate()
+    
     const onSubmit = async data => {
+        const planController = new Api({ controller: "authentication" })
+
         try {
-            const planController = new Api({ controller: "authentication" })
 
             await planController.post({ data: data }).then(response => {
                 localStorage.setItem("userToken", response.data.token)
@@ -26,7 +27,14 @@ export default function LoginForm({changeToken}) {
             
             navigate("/plan-enroll")
         } catch (error) {
-            setMessage(error.response.data.message)
+            if(planController.isInternalError)
+            {
+                setMessage(null)
+                
+                notify({message: "Erro interno ao fazer login", status: "error"})
+            }
+            else
+                setMessage(error.response.data.message)
         }
 	}
     

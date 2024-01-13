@@ -10,14 +10,21 @@ import fight from '../icons/fight.png'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useForm } from 'react-hook-form'
 
-export default function ClassCategoryForm() {
-	const classCategoriesController = new Api({ controller: "class-categories" })
+export default function ClassCategoryForm({ notify }) {
 	const classTypes = [bodyBuilder, dance, fight]
 
 	const {register, handleSubmit, formState: { errors }, } = useForm({ resolver: joiResolver(schema), defaultValues: {...intialClassCategory}})
 
     const onSubmit = async data => {
-		await classCategoriesController.post({data: data})
+		const classCategoriesController = new Api({ controller: "class-categories" })
+
+		try {
+			await classCategoriesController.post({data: data})	
+		
+		} catch (error) {
+			if(classCategoriesController.isInternalError)
+				notify({ message: "Erro interno ao cadastrar plano", status: "error" })
+		}
 	}
 
     return (

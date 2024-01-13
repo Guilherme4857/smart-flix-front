@@ -11,7 +11,7 @@ import SearchList from './SearchList'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useForm } from 'react-hook-form'
 
-export default function PlanForm() {
+export default function PlanForm({ notify }) {
     const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm({ resolver: joiResolver(schema), defaultValues: { ...intialPlan } })
     register("classCategoriesIds")
     
@@ -22,19 +22,24 @@ export default function PlanForm() {
     
     useEffect(() =>{
         const classCategoriesController = new Api({ controller: "class-categories" })
-        
+
         const getClassCategories = async () => {
-            const response = await classCategoriesController.get()            
+            try {
+                const response = await classCategoriesController.get()            
             
-            if(response !== undefined)
-            {
-                const array = new ArrayExtension(...response.data)
-                setClassCategories(array)   
+                if(response !== undefined)
+                {
+                    const array = new ArrayExtension(...response.data)
+                    setClassCategories(array)   
+                }   
+            } catch (error) {
+                if(classCategoriesController.isInternalError)
+                    notify({message: "Erro interno ao listar categorias de classe", status: "error"})                    
             }
         }
         
-        getClassCategories()
-    }, [])
+        getClassCategories()       
+    }, [notify])
 
     const handleSearch = e => {
         const { value } = e.target
@@ -81,13 +86,19 @@ export default function PlanForm() {
     
     const onSubmit = async data => {
         const planController = new Api({ controller: "plans" })
-        
-        setSearchInput("")
-        setCategoriesFinded([])
-        await planController.post({ data: data })
 
-        setSelectedCategoriesIds(new ArrayExtension())
-		reset(intialPlan)
+        try {
+            setSearchInput("")
+            setCategoriesFinded([])
+            
+            await planController.post({ data: data })
+    
+            setSelectedCategoriesIds(new ArrayExtension())
+            reset(intialPlan)
+        } catch (error) {
+            if(planController.isInternalError)
+                notify({message: "Erro interno ao cadastrar plano", status: "error"})
+        }
 	}
 
     return (
