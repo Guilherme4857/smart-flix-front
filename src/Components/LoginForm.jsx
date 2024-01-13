@@ -15,7 +15,7 @@ export default function LoginForm({ changeToken, notify }) {
     const navigate = useNavigate()
     
     const onSubmit = async data => {
-        const planController = new Api({ controller: "authentication" })
+        const planController = new Api({ controller: "authentication/login" })
 
         try {
 
