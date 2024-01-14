@@ -1,6 +1,6 @@
 import "../styles/LoginForm.css"
 
-import { Button, Card, Form } from "react-bootstrap"
+import { Button, Card, Form, Nav } from "react-bootstrap"
 import { intialLogin, schema } from '../Validations/LoginFormValidations'
 
 import Api from '../api/Api'
@@ -54,7 +54,11 @@ export default function LoginForm({ changeToken, notify }) {
                     <Form.Control { ...register("password") } name="password" type="password" placeholder="Senha" />
                     {errors.password?.message && <Form.Text>{ errors.password?.message }</Form.Text>}
                 </Form.Group>
-                                
+                
+                <Form.Text>
+                    <Nav.Link href="/employee-sigup">Registre-se</Nav.Link>
+                </Form.Text>
+                
                 <Button variant="primary mt-5" type="submit">
                     Entrar
                 </Button>

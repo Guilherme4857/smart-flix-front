@@ -5,25 +5,30 @@ import NotificationsSystem, { bootstrapTheme, setUpNotifications, useNotificatio
 import { useEffect, useState } from 'react';
 
 import ClassCategoryForm from './Components/ClassCategoryForm';
+import { default as EmployeeSigupForm } from './Components/SignUpForm';
 import LoginForm from './Components/LoginForm';
 import PlanForm from './Components/PlanForm';
 
 export default function App() {
 	const [userToken, changeToken] = useState(localStorage.getItem("userToken"))
 	const { notifications, dismissNotification, notify } = useNotifications()
-
+	
 	setUpNotifications({ defaultProps: { position: 'bottom-right', dismissAfter: 5000 } })
 
 	useEffect(() =>{
 		switch (window.location.pathname) {
 			case "/plan-enroll":
 				break;
+			
 			case "/class-category-enroll":
 				break
-
+			
+			case "/employee-sigup":
+				break
+			
 			case "/login":
 				break
-				
+			
 			default:
 				document.body.style.backgroundColor = "#ffffff"
 				break;
@@ -41,6 +46,7 @@ export default function App() {
 							<Route path="/plan-enroll" element={<Navigate to={"/login"}/>}/>
 							<Route path="/class-category-enroll" element={<Navigate to={"/login"}/>}/>
 							<Route path="/login" element={<LoginForm changeToken={ changeToken } notify={ notify }/>}/>
+							<Route path="/employee-sigup" element={<EmployeeSigupForm notify={ notify } activeRole={ true }/>}/>
 						</>)
 					}
 					{
