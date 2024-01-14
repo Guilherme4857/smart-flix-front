@@ -23,7 +23,7 @@ export default function App() {
 			case "/class-category-enroll":
 				break
 			
-			case "/employee-sigup":
+			case "/employee-signup":
 				break
 			
 			case "/login":
