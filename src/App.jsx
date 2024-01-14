@@ -46,7 +46,7 @@ export default function App() {
 							<Route path="/plan-enroll" element={<Navigate to={"/login"}/>}/>
 							<Route path="/class-category-enroll" element={<Navigate to={"/login"}/>}/>
 							<Route path="/login" element={<LoginForm changeToken={ changeToken } notify={ notify }/>}/>
-							<Route path="/employee-sigup" element={<EmployeeSigupForm notify={ notify } activeRole={ true }/>}/>
+							<Route path="/employee-signup" element={<EmployeeSigupForm notify={ notify } activeRole={ true }/>}/>
 						</>)
 					}
 					{

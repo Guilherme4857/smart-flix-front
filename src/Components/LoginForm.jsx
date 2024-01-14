@@ -56,7 +56,7 @@ export default function LoginForm({ changeToken, notify }) {
                 </Form.Group>
                 
                 <Form.Text>
-                    <Nav.Link href="/employee-sigup">Registre-se</Nav.Link>
+                    <Nav.Link href="/employee-signup">Registre-se</Nav.Link>
                 </Form.Text>
                 
                 <Button variant="primary mt-5" type="submit">
