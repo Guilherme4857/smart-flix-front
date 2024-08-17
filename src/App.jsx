@@ -37,7 +37,7 @@ export default function App() {
 	
 	return (
 		<>
-			<Router>
+			<Router>				
 				<Routes>
 					{
 						!userToken && (
@@ -45,6 +45,7 @@ export default function App() {
 							<Route path="/" element={<Navigate to={"/login"}/>}/>
 							<Route path="/plan-enroll" element={<Navigate to={"/login"}/>}/>
 							<Route path="/class-category-enroll" element={<Navigate to={"/login"}/>}/>
+							<Route path="/employee-home" element={<Navigate to={"/login"}/>}/>
 							<Route path="/login" element={<LoginForm changeToken={ changeToken } notify={ notify }/>}/>
 							<Route path="/employee-signup" element={<EmployeeSigupForm notify={ notify } activeRole={ true }/>}/>
 						</>)
