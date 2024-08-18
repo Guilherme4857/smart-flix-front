@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/smart-flix-front/static/css/main.c083c953.css",
-    "main.js": "/smart-flix-front/static/js/main.6cb5942b.js",
+    "main.css": "/smart-flix-front/static/css/main.60cf9a79.css",
+    "main.js": "/smart-flix-front/static/js/main.9fca18c6.js",
     "static/js/787.23c10f74.chunk.js": "/smart-flix-front/static/js/787.23c10f74.chunk.js",
     "static/media/fa-solid-900.ttf": "/smart-flix-front/static/media/fa-solid-900.2877d54f94f30c5d563c.ttf",
     "static/media/fa-brands-400.ttf": "/smart-flix-front/static/media/fa-brands-400.13e40630e5866f777de8.ttf",
@@ -15,12 +15,12 @@
     "static/media/fa-v4compatibility.ttf": "/smart-flix-front/static/media/fa-v4compatibility.6c0a7b774ffa1cf0a059.ttf",
     "static/media/fa-v4compatibility.woff2": "/smart-flix-front/static/media/fa-v4compatibility.497d535001197a9c5b38.woff2",
     "index.html": "/smart-flix-front/index.html",
-    "main.c083c953.css.map": "/smart-flix-front/static/css/main.c083c953.css.map",
-    "main.6cb5942b.js.map": "/smart-flix-front/static/js/main.6cb5942b.js.map",
+    "main.60cf9a79.css.map": "/smart-flix-front/static/css/main.60cf9a79.css.map",
+    "main.9fca18c6.js.map": "/smart-flix-front/static/js/main.9fca18c6.js.map",
     "787.23c10f74.chunk.js.map": "/smart-flix-front/static/js/787.23c10f74.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c083c953.css",
-    "static/js/main.6cb5942b.js"
+    "static/css/main.60cf9a79.css",
+    "static/js/main.9fca18c6.js"
   ]
 }
